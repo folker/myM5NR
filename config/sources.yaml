@@ -198,6 +198,19 @@ Greengenes:
     - rm -fv md52rnaseq.txt md52taxid.txt md52id.txt
     - ${M5NR_BIN}/merge_md5.py
 
+
+GTDB:
+  category: taxonomy
+  type: hierarchical organism annotation
+  homepage: https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/ 
+  description: The GTDB Taxonomy Database
+  version:
+  rank: 1
+  download:
+    - https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/
+  parser:
+
+
 InterPro:
   category: protein
   type: function annotation
