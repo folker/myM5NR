@@ -17,18 +17,12 @@ There are seperate dockerfiles for the different actions available: download, pa
 They can be built with the following commands:
 
 ```bash
-docker build -t mgrast/m5nr-download -f download/Dockerfile-download .
-docker build -t mgrast/m5nr-parse -f parse/Dockerfile-parse .
-docker build -t mgrast/m5nr-build -f build/Dockerfile-build .
-docker build -t mgrast/m5nr-upload -f upload/Dockerfile-upload .
+docker build -t mgrast/m5nr .
 ```
 
 Examples for manual invocation:
 ```bash
-docker run -t -d --name m5nr-download -v /var/tmp/m5nr:/m5nr_data mgrast/m5nr-download bash
-docker run -t -d --name m5nr-parse -v /var/tmp/m5nr:/m5nr_data mgrast/m5nr-parse bash
-docker run -t -d --name m5nr-build -v /var/tmp/m5nr:/m5nr_data mgrast/m5nr-build bash
-docker run -t -d --name m5nr-upload -v /var/tmp/m5nr:/m5nr_data mgrast/m5nr-upload bash
+docker run -t -d --name mgrast/m5nr -v /var/tmp/m5nr:/m5nr_data mgrast/m5nr bash
 ```
 
 From now steps execute inside the container
@@ -58,23 +52,23 @@ cd /m5nr_data
 /myM5NR/bin/m5nr_compiler.py status --debug
 ```
 
-To use automated wrapper script for full round build
+To use an automated wrapper script for full round build
 ```bash
-docker exec m5nr-download m5nr_master.sh -a download
-docker exec m5nr-parse m5nr_master.sh -a parse
-docker exec m5nr-build m5nr_master.sh -a build -v <m5nr version #>
-docker exec m5nr-upload m5nr_master.sh -a upload -v <m5nr version #> -t <shock token>
+docker exec m5nr m5nr_master.sh -a download
+docker exec m5nr m5nr_master.sh -a parse
+docker exec m5nr m5nr_master.sh -a build -v <m5nr version #>
+docker exec m5nr m5nr_master.sh -a upload -v <m5nr version #> -t <shock token>
 ```
 
 To load build data on solr server, run following on same host
 ```bash
-docker exec m5nr-upload docker_setup.sh
-docker exec m5nr-upload solr_load.sh -n -i <shock file download url> -v <m5nr version #> -s <solr url>
+docker exec m5nr docker_setup.sh
+docker exec m5nr solr_load.sh -n -i <shock file download url> -v <m5nr version #> -s <solr url>
 ```
 
 To load build data on cassandra cluster, run following
 ```bash
-docker exec m5nr-upload cassandra_load.py -n -i <shock file download url> -v <m5nr version #> -t <shock token>
+docker exec m5nr cassandra_load.py -n -i <shock file download url> -v <m5nr version #> -t <shock token>
 ```
 
 To check table sizes in cassandra for new m5nr build
